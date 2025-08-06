@@ -1,9 +1,12 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven3.9.9'
+    }
     stages {
-        stage('Example') {
+        stage('Install Dependencies') {
             steps {
-                echo 'Hello World'
+                sh 'mvn install -DskipTests=true'
             }
         }
     }
