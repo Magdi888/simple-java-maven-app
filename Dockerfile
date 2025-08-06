@@ -1,13 +1,6 @@
-FROM maven:3.9.9-eclipse-temurin-21-noble
+FROM gcr.io/distroless/java21-debian12	
 
 WORKDIR /app
+COPY target/my-app-1.0-SNAPSHOT.jar my-app-1.0-SNAPSHOT.jar
 
-COPY pom.xml pom.xml
-
-RUN mvn install -DskipTests=true
-
-COPY src src
-
-RUN mvn package
-
-CMD [ "java", "-jar", "target/my-app-1.0-SNAPSHOT.jar" ]
+CMD [ "java", "-jar", "my-app-1.0-SNAPSHOT.jar" ]

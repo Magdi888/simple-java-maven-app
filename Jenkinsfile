@@ -19,5 +19,14 @@ pipeline {
                 sh 'mvn package -DskipTests=true'
             }
         }
+        stage('Docker Build') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
+                    sh 'docker build -t amagdi888/java:v2 .'
+                    sh 'echo $PASSWORD | docker login -u $USER --password-stdin'
+                    sh 'docker push amagdi888/java:v2'
+                }
+            }
+        }
     }
 }
